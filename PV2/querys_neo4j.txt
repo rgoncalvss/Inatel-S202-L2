@@ -1,0 +1,29 @@
+1. Quem é amigo de Bob?
+MATCH (b:Usuario {nome: 'Bob'})-[:AMIGO]-(amigo)
+RETURN amigo.nome
+
+2. Quem postou a 'Postagem 2'?
+MATCH (:Postagem {titulo: 'Memórias da Tarde'})<-[:POSTOU]-(autor)
+RETURN autor.nome
+
+3.Quem tem mais de 35 anos e fez uma postagem?
+MATCH (u:Usuario)-[:POSTOU]->(:Postagem)
+WHERE u.idade > 35
+RETURN u.nome
+
+4.Encontre o usuário mais velho:
+MATCH (u:Usuario)
+RETURN u.nome, u.idade
+ORDER BY u.idade DESC
+LIMIT 1
+
+5.Quantos usuários têm mais de 30 anos:
+MATCH (u:Usuario)
+WHERE u.idade > 30
+RETURN count(u) AS totalUsuariosMais30Anos
+
+6.Qual é a média de idade dos usuários:
+MATCH (u:Usuario)
+WITH avg(u.idade) AS mediaIdade
+RETURN toInteger(mediaIdade) AS mediaIdadeInteira
+
